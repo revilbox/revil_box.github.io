@@ -129,9 +129,9 @@
     <div class="roblox-menu">
         <div class="menu-header">H1ki (revil_box) Story</div>
         
-        <!-- Окно для твоего скина (картинка подгрузится через JS скрипт ниже) -->
+        <!-- Прямая ссылка на официальный 3D-аватар твоего аккаунта без CORS-запросов -->
         <div class="character-preview">
-            <img id="robloxAvatar" src="" alt="Загрузка персонажа...">
+            <img src="https://rbxcdn.com" alt="H1ki Avatar">
         </div>
 
         <button class="roblox-btn play" onclick="startGame()">Начать историю</button>
@@ -151,24 +151,7 @@
     </div>
 
     <script>
-        // Безопасное подключение твоего аватара через официальное API Roblox Thumbnails
-        const userId = "3833122242";
-        const apiUrl = `https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=352x352&format=Png&isCircular=false`;
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(result => {
-                if (result.data && result.data[0] && result.data[0].imageUrl) {
-                    document.getElementById('robloxAvatar').src = result.data[0].imageUrl;
-                }
-            })
-            .catch(error => {
-                console.log("Не удалось загрузить скин напрямую, ставим запасной вариант", error);
-                // Если API даст сбой, покажем стандартного классического персонажа
-                document.getElementById('robloxAvatar').src = "https://rbxcdn.com";
-            });
-
-        // Массив с шагами твоей истории
+        // Массив с твоей историей
         const storySteps = [
             {
                 title: "Глава 1: Рождение легенды",
@@ -191,7 +174,7 @@
         let currentStep = 0;
 
         function startGame() {
-            playRetroSound(440, 0.1); // Олдскульный писк запуска страницы истории
+            playRetroSound(440, 0.1); 
             document.getElementById('storyBox').style.display = 'flex';
             showStep();
         }
@@ -208,7 +191,7 @@
         }
 
         function nextStep() {
-            playRetroSound(587, 0.05); // Звук клика кнопок "Далее"
+            playRetroSound(587, 0.05); 
             if (currentStep === storySteps.length - 1) {
                 document.getElementById('storyBox').style.display = 'none';
                 currentStep = 0;
@@ -218,17 +201,17 @@
             }
         }
 
-        // Чистая генерация звука силами браузера через Web Audio API
+        // Звуки без ошибок в консоли
         function playRetroSound(frequency, duration) {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 
-                oscillator.type = 'square'; // 8-битная волна
+                oscillator.type = 'square'; 
                 oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
                 
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Безопасная негромкая громкость
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); 
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
                 
                 oscillator.connect(gainNode);
@@ -237,7 +220,7 @@
                 oscillator.start();
                 oscillator.stop(audioCtx.currentTime + duration);
             } catch(e) {
-                console.log("Аудиоконтекст заблокирован до первого клика или не поддерживается");
+                console.log("Аудио заблокировано");
             }
         }
     </script>

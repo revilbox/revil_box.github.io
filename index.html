@@ -3,50 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Сайт</title>
+    <title>Roblox Classic Story</title>
     <style>
+        /* Стилизация в духе ретро-Роблокса */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            /* Кастомный классический курсор в виде стрелки */
+            cursor: url('https://wikimedia.org'), auto;
+            user-select: none;
         }
+
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            padding: 20px;
+            /* Фирменная текстура зеленого поля (стад-блоки) или просто олдскульный градиент */
+            background: radial-gradient(circle, #2e8b57 0%, #1e4d2b 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            flex-direction: column;
+            overflow: hidden;
         }
-        .card {
-            background: #1e293b;
-            padding: 40px;
-            border-radius: 12px;
+
+        /* Контейнер меню (в стиле старых всплывающих окон) */
+        .roblox-menu {
+            background-color: #e1e1e1;
+            border: 4px solid #555555;
+            border-radius: 0px; /* В старом Роблоксе не было скруглений! */
+            width: 450px;
+            padding: 20px;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.4);
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            max-width: 500px;
+            position: relative;
         }
-        h1 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            font-size: 2rem;
+
+        /* Верхняя панель окна */
+        .menu-header {
+            background: linear-gradient(to bottom, #4a75a0, #285078);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            border: 2px solid #ffffff;
+            text-shadow: 1px 1px 0px #000;
         }
-        p {
-            color: #94a3b8;
+
+        /* Стилизация персонажа */
+        .character-preview {
+            width: 140px;
+            height: 140px;
+            background-color: #fff;
+            border: 3px inset #888;
+            margin: 0 auto 25px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .character-preview img {
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated; /* Эффект старой графики */
+        }
+
+        /* Классические кнопки Roblox (Серые со скошенными краями) */
+        .roblox-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to bottom, #aaaaaa 0%, #cccccc 15%, #777777 100%);
+            border: 3px solid;
+            border-color: #ffffff #555555 #555555 #ffffff;
+            color: #000000;
+            padding: 12px;
             font-size: 1.1rem;
-            line-height: 1.5;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            box-shadow: inset 1px 1px 0px #fff;
+        }
+
+        /* Кнопка "ИГРАТЬ" выделяется зеленым */
+        .roblox-btn.play {
+            background: linear-gradient(to bottom, #00e000 0%, #00ff00 15%, #008000 100%);
+            color: white;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .roblox-btn:active {
+            border-color: #555555 #ffffff #ffffff #555555;
+            padding: 13px 11px 11px 13px; /* Имитация нажатия */
+        }
+
+        /* Подвал меню */
+        .menu-footer {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* Сюжетное окно (изначально скрыто) */
+        .story-box {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #e1e1e1;
+            padding: 20px;
+            flex-direction: column;
+            justify-content: space-between;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Привет от GitHub Pages!</h1>
-        <p>Если ты видишь этот текст, значит код успешно заработал. Это твоя первая современная карточка с темной темой.</p>
+    <div class="roblox-menu">
+        <!-- Заголовок в стиле старого интерфейса -->
+        <div class="menu-header">ROBLOX: Хроники Нуба v2008</div>
+        
+        <!-- Окно превью персонажа. Замени ссылку на аватар своего скина, если есть! -->
+        <div class="character-preview">
+            <img src="https://rbxcdn.com" alt="Roblox Character" id="char-img">
+        </div>
+
+        <!-- Кнопки управления меню -->
+        <button class="roblox-btn play" onclick="startGame()">Играть</button>
+        <button class="roblox-btn" onclick="alert('Сюжет создается! Скоро здесь будут главы.')">Выбор Главы</button>
+        <button class="roblox-btn" onclick="window.close(); alert('Ты не можешь покинуть классический Роблокс!');">Выход</button>
+
+        <div class="menu-footer">© ROBLOX Corporation 2008-2012</div>
+
+        <!-- Сюжетный блок, который откроется при клике на "Играть" -->
+        <div class="story-box" id="storyBox">
+            <div class="menu-header" style="margin-bottom: 10px;">Пролог: Странный Сервер</div>
+            <p style="text-align: left; font-size: 1rem; line-height: 1.4; color: #000;">
+                Вы зашли на старую карту «Crossroads» 2008 года, но на сервере никого не было... <br><br>
+                Вдруг в чате появилось сообщение от неизвестного игрока. Твой персонаж оглянулся вокруг. Приключение начинается!
+            </p>
+            <button class="roblox-btn play" onclick="location.reload()" style="margin-top: 15px;">В главное меню</button>
+        </div>
     </div>
+
+    <script>
+        // Функция запуска "игры" (сюжета)
+        function startGame() {
+            // Олдскульный звук клика (имитация через стандартный бип, если нет файла)
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); 
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.1);
+
+            // Показываем окно с началом сюжета
+            document.getElementById('storyBox').style.display = 'flex';
+        }
+    </script>
 
 </body>
 </html>

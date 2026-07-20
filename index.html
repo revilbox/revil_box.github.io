@@ -3,183 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Современный Сайт</title>
+    <title>Мой Сайт</title>
     <style>
-        /* Современные CSS переменные для легкой смены темы */
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-color: #f8fafc;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
         }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Эффект стеклянного размытия для шапки (Glassmorphism) */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 5%;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(12px);
-            background: rgba(15, 23, 42, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 20px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Главный экран (Hero Section) */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            flex-direction: column;
         }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 span {
-            color: var(--accent-color);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            color: #94a3b8;
-            margin-bottom: 30px;
-        }
-
-        /* Современная кнопка с плавной анимацией */
-        .btn {
-            background-color: var(--accent-color);
-            color: #0f172a;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s, background-color 0.3s;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-3px);
-        }
-
-        /* Сетка с карточками (Контентная зона) */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
         .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-            transition: transform 0.3s, border-color 0.3s;
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            max-width: 500px;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-        }
-
-        .card h3 {
+        h1 {
+            color: #38bdf8;
             margin-bottom: 15px;
-            color: var(--accent-color);
+            font-size: 2rem;
         }
-
-        /* Адаптивность для мобильных устройств */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.3rem; }
-            header { padding: 15px 20px; }
-            nav { display: none; } /* Для простоты скрываем меню на мобильных */
+        p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">&lt;DevName /&gt;</div>
-        <nav>
-            <a href="#about">Обо мне</a>
-            <a href="#projects">Проекты</a>
-            <a href="#contacts">Контакты</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <h1>Привет! Я <span>начинающий разработчик</span></h1>
-        <p>Создаю свой первый современный сайт и размещаю его на GitHub Pages. Изучаю технологии и двигаюсь к веб-разработке.</p>
-        <a href="#projects" class="btn">Посмотреть проекты</a>
-    </section>
-
-    <div class="container" id="projects">
-        <h2 style="text-align: center; font-size: 2rem;">Что я изучаю</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>HTML5 & CSS3</h3>
-                <p>Основа любого сайта. Отвечает за структуру, адаптивную верстку, сетки и красивые современные стили.</p>
-            </div>
-            <div class="card">
-                <h3>JavaScript</h3>
-                <p>Язык программирования, который делает страницы «живыми»: добавляет интерактивность, логику и анимации.</p>
-            </div>
-            <div class="card">
-                <h3>Git & GitHub</h3>
-                <p>Инструменты для контроля версий кода и бесплатного хостинга сайтов с помощью технологии GitHub Pages.</p>
-            </div>
-        </div>
+    <div class="card">
+        <h1>Привет от GitHub Pages!</h1>
+        <p>Если ты видишь этот текст, значит код успешно заработал. Это твоя первая современная карточка с темной темой.</p>
     </div>
 
 </body>

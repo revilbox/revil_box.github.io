@@ -15,7 +15,6 @@
         }
 
         body {
-            /* Олдскульный зеленый фон Crossroads */
             background: radial-gradient(circle, #2e8b57 0%, #1e4d2b 100%);
             display: flex;
             justify-content: center;
@@ -24,7 +23,6 @@
             overflow: hidden;
         }
 
-        /* Главное меню */
         .roblox-menu {
             background-color: #e1e1e1;
             border: 4px solid #555555;
@@ -35,7 +33,6 @@
             position: relative;
         }
 
-        /* Синяя классическая шапка */
         .menu-header {
             background: linear-gradient(to bottom, #4a75a0, #285078);
             color: white;
@@ -47,7 +44,6 @@
             text-shadow: 1px 1px 0px #000;
         }
 
-        /* Превью твоего аватара */
         .character-preview {
             width: 180px;
             height: 180px;
@@ -62,11 +58,10 @@
         }
 
         .character-preview img {
-            width: 110%;
+            width: 100%;
             height: auto;
         }
 
-        /* Кнопки Roblox */
         .roblox-btn {
             display: block;
             width: 100%;
@@ -101,7 +96,6 @@
             font-weight: bold;
         }
 
-        /* Сюжетное диалоговое окно */
         .story-box {
             display: none;
             position: absolute;
@@ -127,34 +121,16 @@
             height: 60%;
             overflow-y: auto;
         }
-
-        /* Кнопка музыки в углу экрана */
-        .music-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #4a75a0;
-            color: white;
-            border: 1px solid white;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Старый добрый саундтрек Roblox Wind (разрешен для автовоспроизведения после клика) -->
-    <audio id="bg-music" loop src="https://soundboard.com"></audio>
-
     <div class="roblox-menu">
-        <button class="music-toggle" onclick="toggleMusic()" id="musicBtn">🎵 Звук: ВЫКЛ</button>
-        
         <div class="menu-header">H1ki (revil_box) Story</div>
         
-        <!-- Сюда автоматически подгружается твой скин по ID -->
+        <!-- Исправленный рабочий рендер твоего скина -->
         <div class="character-preview">
-            <img src="https://rbxcdn.com" id="robloxAvatar" alt="H1ki Avatar">
+            <img src="https://roblox.com" alt="H1ki Avatar">
         </div>
 
         <button class="roblox-btn play" onclick="startGame()">Начать историю</button>
@@ -167,20 +143,13 @@
         <div class="story-box" id="storyBox">
             <div class="menu-header" id="chapterTitle">Глава 1: Появление</div>
             <div class="story-text" id="storyContent">
-                Загрузка истории персонажа H1ki...
+                Загрузка истории...
             </div>
             <button class="roblox-btn play" onclick="nextStep()" id="nextBtn">Далее</button>
         </div>
     </div>
 
     <script>
-        // Интеграция твоего официального аватара по ID
-        const userId = "3833122242";
-        const avatarImg = document.getElementById('robloxAvatar');
-        // Используем официальное API Roblox для отображения поясного аватара (Bust)
-        avatarImg.src = `https://roblox.com{userId}&size=180x180&format=Png&isCircular=false`;
-
-        // Массив с шагами твоей истории
         const storySteps = [
             {
                 title: "Глава 1: Рождение легенды",
@@ -203,7 +172,7 @@
         let currentStep = 0;
 
         function startGame() {
-            startSound();
+            playRetroSound(440, 0.1); // Олдскульный писк запуска
             document.getElementById('storyBox').style.display = 'flex';
             showStep();
         }
@@ -220,9 +189,8 @@
         }
 
         function nextStep() {
-            clickSound();
+            playRetroSound(587, 0.05); // Звук переключения "Далее"
             if (currentStep === storySteps.length - 1) {
-                // Возврат в меню
                 document.getElementById('storyBox').style.display = 'none';
                 currentStep = 0;
             } else {
@@ -231,29 +199,27 @@
             }
         }
 
-        // Музыкальные функции
-        const music = document.getElementById('bg-music');
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                document.getElementById('musicBtn').innerText = "🎵 Звук: ВКЛ";
-            } else {
-                music.pause();
-                document.getElementById('musicBtn').innerText = "🎵 Звук: ВЫКЛ";
+        // Чистая генерация звука силами браузера без внешних ссылок
+        function playRetroSound(frequency, duration) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'square'; // Квадратная волна дает классный 8-битный ретро звук
+                oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Делаем звук не слишком громким
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + duration);
+            } catch(e) {
+                console.log("Аудио не поддерживается браузером");
             }
-        }
-
-        function startSound() {
-            if (music.paused) { toggleMusic(); }
-        }
-
-        function clickSound() {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-            osc.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
         }
     </script>
 
